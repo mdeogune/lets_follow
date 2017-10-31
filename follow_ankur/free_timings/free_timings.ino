@@ -21,7 +21,7 @@ QTRSensorsRC qtrrc((unsigned char[]) {3, 4, 6, 7, 9, 12},NUM_SENSORS, TIMEOUT, E
 void (*action)() ;
 class Bot{
   private:
-    unsigned int sensors[6];z   
+    unsigned int sensors[6];
     unsigned int pos=0;
     unsigned int lastpos=0;
     int lasterror=0;
