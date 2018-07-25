@@ -18,10 +18,20 @@
 float KP=0.075;
 QTRSensorsRC qtrrc((unsigned char[]) {3, 4, 6, 7, 9, 12},NUM_SENSORS, TIMEOUT, EMITTER_PIN); // sensors 0 through 7 are connected to digital pins 3 through 10, respectivel
 
+
 void (*action)() ;
+
+ 
+class Graph
+{
+  public:
+  enum Node{Staight,Tee,Plus,Right,Left};
+  int check_conditions();
+}; 
+
 class Bot{
   private:
-    unsigned int sensors[6];z   
+    unsigned int sensors[6];
     unsigned int pos=0;
     unsigned int lastpos=0;
     int lasterror=0;
@@ -31,23 +41,24 @@ class Bot{
     void read_sensor();
     void follow_segment();
   
-};
+}bot;
 
 
 void Bot::follow_segment(){
-  int error,motorspeed,lms,rms,node;  
+  int error,motorspeed,lms,rms;  
+  Graph:: Node node;
   bot.read_sensors()
   if(node=bot.has_node())
   {
     graph.register_node(node);
     bot.dir=graph.get_direction();
     action=bot.turn;
-    return
+    return;
   }
   error = pos - 2500; 
   motorspeed = KP * error + KD * (error - lasterror);
   lasterror = error; 
- `lms= normal_speed+motorspeed;
+  lms= normal_speed+motorspeed;
   rms= normal_speed-motorspeed;
   if(lms>max_speed)
   lms=max_speed;
@@ -64,6 +75,10 @@ void Bot::follow_segment(){
   digitalWrite(lmtr2,LOW);
   digitalWrite(rmtr1,HIGH);
   digitalWrite(rmtr2,LOW);
+}
+
+void Bot:: has_node(){
+  if 
 }
 
 void Bot::turn()
@@ -88,19 +103,13 @@ bool Sensor(int x)
 }
 
 
-void Bot:: execute(){}
-void Bot:: read_sensor(){
+ 
+void Bot:: read_sensors(){
   pos = qtrrc.readLine(sensors); //Serial.println(pos);
 }
 
 
-int command;
-class Graph
-{
-  public:
-  int check_conditions(Bot);
-};
-Bot bot;
+
 //----------------------------------------------------------------------------------------------------------------------------------
 
 void setup() {
